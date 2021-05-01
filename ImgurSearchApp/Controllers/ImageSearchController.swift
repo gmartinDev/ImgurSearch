@@ -116,8 +116,6 @@ extension ImageSearchController: ImageSearchViewDatasource {
 
 extension ImageSearchController: ImageSearchViewDelegate {
     func imageSelected(at indexPath: IndexPath, thumbnail: UIImage?) {
-        
-        //TODO handle image selected
         let imageModel = getImage(at: indexPath)
         let placeholder = thumbnail ?? #imageLiteral(resourceName: "placeholderImage")
         let link = imageModel?.link ?? ""

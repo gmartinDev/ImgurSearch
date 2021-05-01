@@ -167,8 +167,6 @@ extension ImageSearchView: UICollectionViewDataSource {
         } else {
             cell = ImageCell(frame: .zero)
         }
-        
-        //TODO: setup cell with image
         cell.imageUrl = imageModel.link ?? ""
         
         return cell
