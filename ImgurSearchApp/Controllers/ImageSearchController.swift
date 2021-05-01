@@ -70,17 +70,22 @@ extension ImageSearchController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text, !query.isEmpty else { return }
         contentView?.resetViewToTop()
+        contentView?.showSpinner()
         imgurService.searchImage(queryString: query) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success(let images):
                 self.imageResults = images
                 DispatchQueue.main.async {
-                    self.contentView?.refreshList()
+                    if query == searchController.searchBar.text {
+                        self.contentView?.refreshList()
+                    }
                 }
             case .failure(let apiError):
                 self.displayError(apiError)
             }
+            
+            self.contentView?.hideSpinner()
         }
     }
     
@@ -110,8 +115,13 @@ extension ImageSearchController: ImageSearchViewDatasource {
 }
 
 extension ImageSearchController: ImageSearchViewDelegate {
-    func imageSelected(at indexPath: IndexPath) {
+    func imageSelected(at indexPath: IndexPath, thumbnail: UIImage?) {
         
         //TODO handle image selected
+        let imageModel = getImage(at: indexPath)
+        let placeholder = thumbnail ?? #imageLiteral(resourceName: "placeholderImage")
+        let link = imageModel?.link ?? ""
+        let fullScreenVC = FullScreenImageController(thumbnail: placeholder, originalImageLink: link)
+        navigationController?.pushViewController(fullScreenVC, animated: true)
     }
 }

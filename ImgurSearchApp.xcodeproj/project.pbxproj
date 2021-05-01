@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		825530FD263DB41900C8426A /* FullScreenImageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825530FC263DB41900C8426A /* FullScreenImageController.swift */; };
+		8255310A263DB94B00C8426A /* FullScreenImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82553109263DB94B00C8426A /* FullScreenImageView.swift */; };
 		825E29D3263D2349007007A6 /* ImgurModelGeneric.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825E29D2263D2349007007A6 /* ImgurModelGeneric.swift */; };
 		825E29D5263D2BDF007007A6 /* ImgurErrorModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825E29D4263D2BDF007007A6 /* ImgurErrorModel.swift */; };
 		82890279263CC2C000BDF99A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82890278263CC2C000BDF99A /* AppDelegate.swift */; };
@@ -48,6 +50,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		825530FC263DB41900C8426A /* FullScreenImageController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageController.swift; sourceTree = "<group>"; };
+		82553109263DB94B00C8426A /* FullScreenImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageView.swift; sourceTree = "<group>"; };
 		825E29D2263D2349007007A6 /* ImgurModelGeneric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurModelGeneric.swift; sourceTree = "<group>"; };
 		825E29D4263D2BDF007007A6 /* ImgurErrorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImgurErrorModel.swift; sourceTree = "<group>"; };
 		82890275263CC2C000BDF99A /* ImgurSearchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImgurSearchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,6 +176,7 @@
 			children = (
 				828902CB263CCF4100BDF99A /* Cells */,
 				828902C6263CCB9100BDF99A /* ImageSearchView.swift */,
+				82553109263DB94B00C8426A /* FullScreenImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				828902B8263CC72700BDF99A /* ImageSearchController.swift */,
+				825530FC263DB41900C8426A /* FullScreenImageController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -374,6 +380,8 @@
 				82890279263CC2C000BDF99A /* AppDelegate.swift in Sources */,
 				82BF5F3C263D041B001E9C8B /* ImageApiLoader.swift in Sources */,
 				82BF5F3A263D041B001E9C8B /* ImageEndpoint.swift in Sources */,
+				8255310A263DB94B00C8426A /* FullScreenImageView.swift in Sources */,
+				825530FD263DB41900C8426A /* FullScreenImageController.swift in Sources */,
 				828902CD263CCF5500BDF99A /* ImageCell.swift in Sources */,
 				82BF5F3B263D041B001E9C8B /* ApiConstants.swift in Sources */,
 				828902EC263CF02800BDF99A /* GalleryModel.swift in Sources */,

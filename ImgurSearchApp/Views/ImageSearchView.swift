@@ -14,11 +14,27 @@ protocol ImageSearchViewDatasource: AnyObject {
 }
 
 protocol ImageSearchViewDelegate: AnyObject {
-    func imageSelected(at indexPath: IndexPath)
+    func imageSelected(at indexPath: IndexPath, thumbnail: UIImage?)
 }
 
 class ImageSearchView: UIView {
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
+    private let stateLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 18)
+        label.text = "Search for an image!"
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView(style: .medium)
+        spinner.color = .gray
+        spinner.isHidden = true
+        return spinner
+    }()
     
     public weak var datasource: ImageSearchViewDatasource?
     public weak var delegate: ImageSearchViewDelegate?
@@ -27,6 +43,9 @@ class ImageSearchView: UIView {
         super.init(frame: .zero)
         
         addSubview(collectionView)
+        addSubview(stateLabel)
+        addSubview(spinner)
+        
         backgroundColor = .systemBackground
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -43,6 +62,8 @@ class ImageSearchView: UIView {
     
     private func createConstraints() {
         createCollectionViewConstraints()
+        createStateLabelConstraints()
+        createSpinnerConstraints()
     }
     
     private func createCollectionViewConstraints() {
@@ -55,19 +76,74 @@ class ImageSearchView: UIView {
         ])
     }
     
+    private func createStateLabelConstraints() {
+        stateLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stateLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
+            stateLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
+            stateLabel.leftAnchor.constraint(equalTo: leftAnchor),
+            stateLabel.rightAnchor.constraint(equalTo: rightAnchor)
+        ])
+    }
+    
+    private func createSpinnerConstraints() {
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            spinner.heightAnchor.constraint(equalToConstant: 45),
+            spinner.widthAnchor.constraint(equalToConstant: 45),
+            spinner.centerYAnchor.constraint(equalTo: centerYAnchor),
+            spinner.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
+    }
+    
+    private func displayStateLabel() {
+        stateLabel.text = "No image found, try search something else!"
+        stateLabel.isHidden = false
+    }
+    
+// MARK: - Public
+    
     public func refreshList() {
-        self.collectionView.reloadData()
+        if (datasource?.getImageCount() ?? 0) == 0 {
+            displayStateLabel()
+            collectionView.isHidden = true
+        } else {
+            stateLabel.isHidden = true
+            collectionView.isHidden = false
+        }
+        collectionView.reloadData()
     }
     
     public func resetViewToTop() {
         self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+    }
+    
+    public func showSpinner() {
+        DispatchQueue.main.async {
+            self.spinner.isHidden = false
+            self.stateLabel.isHidden = true
+            self.collectionView.isHidden = true
+            self.spinner.startAnimating()
+        }
+    }
+    
+    public func hideSpinner() {
+        DispatchQueue.main.async {
+            self.spinner.isHidden = true
+            self.collectionView.isHidden = false
+            self.spinner.stopAnimating()
+        }
     }
 }
 
 extension ImageSearchView: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-        delegate?.imageSelected(at: indexPath)
+        var thumbnail: UIImage?
+        if let cell = collectionView.cellForItem(at: indexPath) as? ImageCell {
+            thumbnail = cell.currentImage
+        }
+        delegate?.imageSelected(at: indexPath, thumbnail: thumbnail)
     }
 }
 

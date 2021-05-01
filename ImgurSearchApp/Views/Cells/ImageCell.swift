@@ -15,6 +15,7 @@ class ImageCell: UICollectionViewCell {
         didSet {
             let placeHolderImg = #imageLiteral(resourceName: "placeholderImage")
             
+            // GetMedium thumbnail size of image
             if let last = imageUrl.lastIndex(of: ".") {
                 imageUrl.insert("m", at: last)
             }
@@ -28,6 +29,10 @@ class ImageCell: UICollectionViewCell {
                 imageView.contentMode = .center
             }
         }
+    }
+    
+    public var currentImage: UIImage? {
+        return imageView.image
     }
     
     private let imageView: UIImageView = {

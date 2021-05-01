@@ -28,16 +28,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "41565301-550D-40C1-AE62-910E14800F97"
+            uuid = "23B64522-6BAB-4786-A54E-06EE009261FA"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "ImgurSearchApp/Networking/Api/ApiHandler.swift"
+            filePath = "ImgurSearchApp/Networking/Api/ImageApiLoader.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
-            landmarkName = "defaultParseResponse(data:statusCode:)"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "loadRequest(requestData:completion:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
