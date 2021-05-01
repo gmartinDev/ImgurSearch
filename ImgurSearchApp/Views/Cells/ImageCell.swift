@@ -14,9 +14,14 @@ class ImageCell: UICollectionViewCell {
     public var imageUrl: String = "" {
         didSet {
             let placeHolderImg = #imageLiteral(resourceName: "placeholderImage")
+            
+            if let last = imageUrl.lastIndex(of: ".") {
+                imageUrl.insert("m", at: last)
+            }
+            
             if let url = URL(string: imageUrl) {
                 imageView.af.setImage(withURL: url, placeholderImage: placeHolderImg, completion:  { (_) in
-                    self.imageView.contentMode = .scaleAspectFit
+                    self.imageView.contentMode = .scaleAspectFill
                 })
             } else {
                 imageView.image = placeHolderImg

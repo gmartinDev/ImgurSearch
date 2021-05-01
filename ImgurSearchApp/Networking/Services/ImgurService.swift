@@ -21,9 +21,10 @@ class ImgurService: IImgurService {
         apiRequestLoader.loadRequest(requestData: parameters) { (result) in
             switch result {
             case .success(let galleries):
-                let images = galleries.flatMap { gallery in
+                let images = galleries.compactMap({ (gallery) in
                     gallery.images
-                }
+                }).flatMap { $0 }
+                
                 completion(.success(images))
             case .failure(let apiError):
                 completion(.failure(apiError))

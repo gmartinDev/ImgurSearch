@@ -14,7 +14,7 @@ class GalleryModel: Codable {
     }
     
     let id: String
-    let title: String
-    let imageCount: Int
-    let images: [ImageModel]
+    let title: String?
+    let imageCount: Int?
+    let images: [ImageModel]?
 }

@@ -16,6 +16,7 @@ class ImageSearchController: UIViewController {
     
     private var searchController: UISearchController = {
         let searchController = UISearchController()
+        searchController.obscuresBackgroundDuringPresentation = false
         return searchController
     }()
     
@@ -68,6 +69,7 @@ class ImageSearchController: UIViewController {
 extension ImageSearchController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text, !query.isEmpty else { return }
+        contentView?.resetViewToTop()
         imgurService.searchImage(queryString: query) { [weak self] (result) in
             guard let self = self else { return }
             switch result {

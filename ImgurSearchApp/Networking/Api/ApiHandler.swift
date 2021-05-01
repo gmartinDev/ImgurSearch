@@ -31,10 +31,12 @@ extension RequestHandler {
             return urlComponents.url
         }
         
+        var queryItems = [URLQueryItem]()
         for parameter in parameters {
             let queryItem = URLQueryItem(name: parameter.key, value: parameter.value)
-            urlComponents.queryItems?.append(queryItem)
+            queryItems.append(queryItem)
         }
+        urlComponents.queryItems = queryItems
         return urlComponents.url
     }
 }
@@ -49,8 +51,6 @@ protocol ResponseHandler {
 extension ResponseHandler {
     func defaultParseResponse<T: Codable>(data: Data, statusCode: Int) throws -> T {
         let jsonDecoder = JSONDecoder()
-        
-//        let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         
         guard let genericResponseModel = try? jsonDecoder.decode(ImgurModelGeneric<T>.self, from: data) else {
             //If failed to parse try to decode error

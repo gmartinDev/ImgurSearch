@@ -10,6 +10,7 @@ import Foundation
 class ImageApiLoader<T: ApiHandler> {
     private let request: T
     private let session: URLSession
+    private var currentTask: URLSessionDataTask?
     
     init(apiRequest: T, urlSession: URLSession = .shared) {
         request = apiRequest
@@ -24,7 +25,11 @@ class ImageApiLoader<T: ApiHandler> {
             return
         }
         
-        session.dataTask(with: requestUrl) { (data, response, error) in
+        if let task = currentTask {
+            task.cancel()
+        }
+        
+        currentTask = session.dataTask(with: requestUrl) { (data, response, error) in
             guard let data = data else {
                 let error = error?.localizedDescription ?? "error: \(requestUrl.debugDescription)"
                 completion(.failure(.networkErrror(error: error)))
@@ -47,6 +52,7 @@ class ImageApiLoader<T: ApiHandler> {
                     completion(.failure(.unknownError(error: error.localizedDescription)))
                 }
             }
-        }.resume()
+        }
+        currentTask?.resume()
     }
 }

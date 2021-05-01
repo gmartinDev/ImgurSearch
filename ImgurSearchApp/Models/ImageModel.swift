@@ -13,6 +13,6 @@ class ImageModel: Codable {
     }
     
     let id: String
-    let title: String
-    let link: String
+    let title: String?
+    let link: String?
 }

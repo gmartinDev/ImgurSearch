@@ -58,6 +58,10 @@ class ImageSearchView: UIView {
     public func refreshList() {
         self.collectionView.reloadData()
     }
+    
+    public func resetViewToTop() {
+        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+    }
 }
 
 extension ImageSearchView: UICollectionViewDelegate {
@@ -79,7 +83,7 @@ extension ImageSearchView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let imageModel = datasource?.getImage(at: indexPath) else {
             print("Gallery is unavailable for indexPath: \(indexPath)")
-            return UICollectionViewCell()
+            return ImageCell()
         }
         let cell: ImageCell
         if let reuseCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCell.reuseIdentifier, for: indexPath) as? ImageCell {
@@ -89,7 +93,7 @@ extension ImageSearchView: UICollectionViewDataSource {
         }
         
         //TODO: setup cell with image
-        cell.imageUrl = imageModel.link
+        cell.imageUrl = imageModel.link ?? ""
         
         return cell
     }
